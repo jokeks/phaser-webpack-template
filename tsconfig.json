@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "sourceMap": true
+  },
+  "files": [
+    "node_modules/phaser-ce/typescript/phaser.comments.d.ts",
+    "tsignore.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
