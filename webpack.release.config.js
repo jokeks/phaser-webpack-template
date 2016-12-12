@@ -1,22 +1,30 @@
 var webpack = require('webpack');
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 module.exports = {
     entry: "./src/Main.js",
 
     output: {
-        filename: "bundle.js",
-        path: __dirname + "/build",
+        filename: "bundle.min.js",
+        path: __dirname + "/release",
     },
 
-    watch: true,
     plugins: [
-        new BrowserSyncPlugin({
-            host: process.env.IP || 'localhost',
-            port: process.env.PORT || 3000,
-            server: {
-                baseDir: ['./', './build']
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            sourceMap: false,
+            output: {
+                comments: false
+            },
+            compress: {
+                drop_console: true,
+                warnings: false,
+                drop_debugger: true,
+                conditionals: true,
+                evaluate: true,
+                if_return: true,
+                join_vars: true,
             }
-        })],
+        }),
+    ],
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".png", ".svg", ".jpg", ".jpeg", ".gif", ".json"]
@@ -49,15 +57,7 @@ module.exports = {
             {test: /\.js$/, loader: "source-map-loader"}
         ]
     },
-
-    node: {
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty'
-    },
     externals: {
-        phaser: "Phaser",
+        phaser: "Phaser"
     },
-
-    devtool: "source-map",
 };
