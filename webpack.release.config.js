@@ -6,7 +6,7 @@ module.exports = {
         filename: "bundle.min.js",
         path: __dirname + "/release",
     },
-
+    watch: false,
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             minimize: true,
@@ -22,6 +22,8 @@ module.exports = {
                 evaluate: true,
                 if_return: true,
                 join_vars: true,
+                loops: true,
+                booleans: true,
             }
         }),
     ],
@@ -44,6 +46,7 @@ module.exports = {
                     'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
                 ]
             },
+            // copy files
             {
                 test: /\.(mp3|ogg|json)$/,
                 loaders: [
@@ -51,11 +54,10 @@ module.exports = {
                 ]
             }
         ],
-
-        preLoaders: [
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            {test: /\.js$/, loader: "source-map-loader"}
-        ]
+    }, node: {
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
     },
     externals: {
         phaser: "Phaser"
